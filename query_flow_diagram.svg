@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="600" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#2c3e50">
+    RAG System Query Processing Flow
+  </text>
+  
+  <!-- Frontend Section -->
+  <rect x="50" y="70" width="200" height="100" rx="8" fill="#3498db" stroke="#2980b9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="150" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Frontend</text>
+  <text x="150" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">script.js</text>
+  <text x="150" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">User types query</text>
+  <text x="150" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">POST /api/query</text>
+  <text x="150" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">{"query", "session_id"}</text>
+  
+  <!-- FastAPI Section -->
+  <rect x="350" y="70" width="200" height="100" rx="8" fill="#e74c3c" stroke="#c0392b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">FastAPI Endpoint</text>
+  <text x="450" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">app.py</text>
+  <text x="450" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">@app.post("/api/query")</text>
+  <text x="450" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Create/get session</text>
+  <text x="450" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Call rag_system.query()</text>
+  
+  <!-- RAG System Section -->
+  <rect x="650" y="70" width="200" height="100" rx="8" fill="#9b59b6" stroke="#8e44ad" stroke-width="2" filter="url(#shadow)"/>
+  <text x="750" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">RAG System</text>
+  <text x="750" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">rag_system.py</text>
+  <text x="750" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Get conversation history</text>
+  <text x="750" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Build system prompt</text>
+  <text x="750" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Call ai_generator</text>
+  
+  <!-- AI Generator Section -->
+  <rect x="950" y="70" width="200" height="100" rx="8" fill="#f39c12" stroke="#d68910" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1050" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">AI Generator</text>
+  <text x="1050" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">ai_generator.py</text>
+  <text x="1050" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Anthropic Claude API</text>
+  <text x="1050" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">With tool definitions</text>
+  <text x="1050" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">tool_choice: "auto"</text>
+  
+  <!-- Claude Decision Diamond -->
+  <polygon points="1050,220 1100,240 1050,260 1000,240" fill="#34495e" stroke="#2c3e50" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1050" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Claude decides:</text>
+  <text x="1050" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Use search tool?</text>
+  
+  <!-- Search Tool Section -->
+  <rect x="750" y="320" width="200" height="100" rx="8" fill="#27ae60" stroke="#229954" stroke-width="2" filter="url(#shadow)"/>
+  <text x="850" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Search Tool</text>
+  <text x="850" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">search_tools.py</text>
+  <text x="850" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">CourseSearchTool</text>
+  <text x="850" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Extract query, filters</text>
+  <text x="850" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Call vector_store.search()</text>
+  
+  <!-- Vector Store Section -->
+  <rect x="450" y="320" width="200" height="100" rx="8" fill="#16a085" stroke="#138d75" stroke-width="2" filter="url(#shadow)"/>
+  <text x="550" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Vector Store</text>
+  <text x="550" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">vector_store.py</text>
+  <text x="550" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">ChromaDB query</text>
+  <text x="550" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Semantic similarity</text>
+  <text x="550" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Return ranked results</text>
+  
+  <!-- ChromaDB Section -->
+  <rect x="150" y="320" width="200" height="100" rx="8" fill="#7f8c8d" stroke="#5d6d7e" stroke-width="2" filter="url(#shadow)"/>
+  <text x="250" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">ChromaDB</text>
+  <text x="250" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Vector Database</text>
+  <text x="250" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Course chunks</text>
+  <text x="250" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Embeddings</text>
+  <text x="250" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Metadata</text>
+  
+  <!-- Format Results Section -->
+  <rect x="450" y="480" width="200" height="80" rx="8" fill="#8e44ad" stroke="#7d3c98" stroke-width="2" filter="url(#shadow)"/>
+  <text x="550" y="500" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Format Results</text>
+  <text x="550" y="515" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Add course/lesson context</text>
+  <text x="550" y="530" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Track sources</text>
+  <text x="550" y="545" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Return formatted text</text>
+  
+  <!-- Final Claude Response Section -->
+  <rect x="750" y="480" width="200" height="80" rx="8" fill="#d35400" stroke="#ba4a00" stroke-width="2" filter="url(#shadow)"/>
+  <text x="850" y="500" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Final Claude Call</text>
+  <text x="850" y="515" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Tool results as context</text>
+  <text x="850" y="530" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Generate final answer</text>
+  <text x="850" y="545" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">No tools this time</text>
+  
+  <!-- Response Assembly Section -->
+  <rect x="450" y="620" width="200" height="80" rx="8" fill="#c0392b" stroke="#a93226" stroke-width="2" filter="url(#shadow)"/>
+  <text x="550" y="640" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Response Assembly</text>
+  <text x="550" y="655" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Collect sources</text>
+  <text x="550" y="670" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Update session history</text>
+  <text x="550" y="685" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Return JSON response</text>
+  
+  <!-- Frontend Display Section -->
+  <rect x="150" y="620" width="200" height="80" rx="8" fill="#2980b9" stroke="#1f618d" stroke-width="2" filter="url(#shadow)"/>
+  <text x="250" y="640" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Frontend Display</text>
+  <text x="250" y="655" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Render answer</text>
+  <text x="250" y="670" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Show sources</text>
+  <text x="250" y="685" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Update session_id</text>
+  
+  <!-- Arrows -->
+  <!-- Frontend to FastAPI -->
+  <line x1="250" y1="120" x2="350" y2="120" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- FastAPI to RAG System -->
+  <line x1="550" y1="120" x2="650" y2="120" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- RAG System to AI Generator -->
+  <line x1="850" y1="120" x2="950" y2="120" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- AI Generator to Decision -->
+  <line x1="1050" y1="170" x2="1050" y2="220" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision to Search Tool (Yes path) -->
+  <line x1="1000" y1="240" x2="950" y2="370" stroke="#27ae60" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="975" y="260" font-family="Arial, sans-serif" font-size="10" fill="#27ae60" font-weight="bold">YES</text>
+  
+  <!-- Search Tool to Vector Store -->
+  <line x1="750" y1="370" x2="650" y2="370" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Vector Store to ChromaDB -->
+  <line x1="450" y1="370" x2="350" y2="370" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- ChromaDB back to Vector Store -->
+  <line x1="350" y1="390" x2="450" y2="390" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Vector Store to Format Results -->
+  <line x1="550" y1="420" x2="550" y2="480" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Format Results to Final Claude -->
+  <line x1="650" y1="520" x2="750" y2="520" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Final Claude back to Response Assembly -->
+  <line x1="750" y1="540" x2="650" y2="620" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Response Assembly to Frontend -->
+  <line x1="450" y1="660" x2="350" y2="660" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision to Response Assembly (No path) -->
+  <line x1="1050" y1="260" x2="1050" y2="680" stroke="#e74c3c" stroke-width="2"/>
+  <line x1="1050" y1="680" x2="650" y2="680" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="1060" y="300" font-family="Arial, sans-serif" font-size="10" fill="#e74c3c" font-weight="bold">NO (Direct Answer)</text>
+  
+  <!-- Legend -->
+  <rect x="50" y="720" width="1100" height="60" rx="5" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="70" y="740" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2c3e50">Flow Legend:</text>
+  <line x1="170" y1="745" x2="200" y2="745" stroke="#27ae60" stroke-width="3"/>
+  <text x="210" y="750" font-family="Arial, sans-serif" font-size="10" fill="#2c3e50">Tool-based search path</text>
+  <line x1="350" y1="745" x2="380" y2="745" stroke="#e74c3c" stroke-width="3"/>
+  <text x="390" y="750" font-family="Arial, sans-serif" font-size="10" fill="#2c3e50">Direct answer path (no search needed)</text>
+  <line x1="570" y1="745" x2="600" y2="745" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="610" y="750" font-family="Arial, sans-serif" font-size="10" fill="#2c3e50">Standard flow direction</text>
+  
+  <text x="70" y="765" font-family="Arial, sans-serif" font-size="10" fill="#2c3e50">
+    • Claude intelligently decides whether to search based on query type
+    • Search results are formatted with course/lesson context and returned to Claude
+    • Final response includes both answer and source attribution
+  </text>
+</svg>
