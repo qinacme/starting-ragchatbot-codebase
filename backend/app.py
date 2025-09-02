@@ -35,6 +35,11 @@ app.add_middleware(
 rag_system = RAGSystem(config)
 
 # Pydantic models for request/response
+class SourceItem(BaseModel):
+    """Model for a source item with optional link"""
+    text: str
+    link: Optional[str] = None
+
 class QueryRequest(BaseModel):
     """Request model for course queries"""
     query: str
@@ -43,7 +48,7 @@ class QueryRequest(BaseModel):
 class QueryResponse(BaseModel):
     """Response model for course queries"""
     answer: str
-    sources: List[str]
+    sources: List[SourceItem]
     session_id: str
 
 class CourseStats(BaseModel):
@@ -85,6 +90,33 @@ async def get_course_stats():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+class ClearSessionRequest(BaseModel):
+    """Request model for clearing a session"""
+    session_id: Optional[str] = None
+
+class ClearSessionResponse(BaseModel):
+    """Response model for clearing a session"""
+    success: bool
+    message: str
+
+@app.post("/api/clear-session", response_model=ClearSessionResponse)
+async def clear_session(request: ClearSessionRequest):
+    """Clear conversation history for a session"""
+    try:
+        if request.session_id:
+            rag_system.session_manager.clear_session(request.session_id)
+            return ClearSessionResponse(
+                success=True,
+                message=f"Session {request.session_id} cleared successfully"
+            )
+        else:
+            return ClearSessionResponse(
+                success=True,
+                message="No session to clear"
+            )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.on_event("startup")
 async def startup_event():
     """Load initial documents on startup"""
@@ -116,4 +148,4 @@ class DevStaticFiles(StaticFiles):
     
     
 # Serve static files for the frontend
-app.mount("/", StaticFiles(directory="../frontend", html=True), name="static")
+app.mount("/", DevStaticFiles(directory="../frontend", html=True), name="static")
