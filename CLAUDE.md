@@ -11,6 +11,9 @@ cp .env.example .env
 
 # Install dependencies using uv
 uv sync
+
+# Install development dependencies for code quality tools
+uv sync --group dev
 ```
 
 ### Running the Application
@@ -22,6 +25,24 @@ chmod +x run.sh
 # Manual start
 cd backend
 uv run uvicorn app:app --reload --port 8000
+```
+
+### Code Quality Tools
+```bash
+# Format code with Black and sort imports
+./scripts/format.sh
+
+# Run all linting and quality checks
+./scripts/lint.sh
+
+# Run complete quality pipeline (format + lint)
+./scripts/quality.sh
+
+# Individual tool usage:
+uv run black backend/ main.py        # Format code
+uv run isort backend/ main.py         # Sort imports
+uv run flake8 backend/ main.py        # Lint code
+uv run mypy backend/ main.py          # Type checking
 ```
 
 ### Access Points
@@ -104,6 +125,32 @@ Documents auto-load from `docs/` folder on startup. Supported formats: `.txt`, `
 - **Environment**: Requires Python 3.13+
 - **API Key**: Anthropic API key required in `.env` file
 - **Port**: Application runs on port 8000 by default
+
+## Code Quality Standards
+
+This project uses automated code quality tools to maintain consistency:
+
+### Tools Configured:
+- **Black**: Code formatter with 88-character line length
+- **isort**: Import sorting compatible with Black
+- **Flake8**: Linting with docstring and import order checks
+- **MyPy**: Static type checking (strict mode)
+
+### Configuration Files:
+- `pyproject.toml`: Tool configurations for Black, isort, and MyPy
+- `.flake8`: Flake8 configuration with Black compatibility
+
+### Quality Standards:
+- All Python code must be formatted with Black (88-character line length)
+- Imports must be sorted with isort (compatible with Black)
+- Code must pass Flake8 linting (with relaxed docstring and import requirements)
+- MyPy type checking available for optional static type analysis
+
+### Usage:
+- Run `./scripts/quality.sh` for the complete quality pipeline (format + lint)
+- Run `./scripts/format.sh` to format code only
+- Run `./scripts/lint.sh` to check code quality only
+- Run `uv run mypy backend/ main.py` separately for optional type checking
 
 ## Tool Integration
 
